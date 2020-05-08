@@ -36,7 +36,7 @@ public class GuestDAL {
                 s.setSdt(rs.getString("SDT"));
                 s.setSex(rs.getInt("sex"));
                 s.setCmnd(rs.getString("cmnd"));
-                s.setNgaydk(rs.getDate("Ngay_DK"));
+                s.setNgaydk(rs.getString("Ngay_DK"));
                 s.setId_phong(rs.getInt("id_phong"));
                 list.add(s);
                 
@@ -72,31 +72,32 @@ public class GuestDAL {
     {
         ArrayList<Guest> listbyid = new ArrayList<>();
         String sql = "SELECT * FROM guests where ID_Phong='"+id+"'";
-     
+        int flag = 0;
          try
         {
             Statement st = da.getConn().createStatement();
             ResultSet rs = st.executeQuery(sql);
             while(rs.next())
             {
+                flag =1;
                 Guest s = new Guest();
                 s.setId(rs.getInt("id"));
                 s.setName(rs.getString("name"));
                 s.setSdt(rs.getString("SDT"));
                 s.setSex(rs.getInt("sex"));
                 s.setCmnd(rs.getString("cmnd"));
-                s.setNgaydk(rs.getDate("Ngay_DK"));
+                s.setNgaydk(rs.getString("Ngay_DK"));
                 s.setId_phong(rs.getInt("id_phong"));
                 listbyid.add(s);
             }
-            return listbyid;
+            if(flag ==1) return listbyid;
            
         }
         catch(Exception e)
         {
             e.printStackTrace();  
         }
-         return listbyid;
+        return null;
     }
 
     public Guest GetByIDPhong(int id) {
@@ -113,7 +114,7 @@ public class GuestDAL {
                 s.setSdt(rs.getString("SDT"));
                 s.setSex(rs.getInt("sex"));
                 s.setCmnd(rs.getString("cmnd"));
-                s.setNgaydk(rs.getDate("Ngay_DK"));
+                s.setNgaydk(rs.getString("Ngay_DK"));
                 s.setId_phong(rs.getInt("id_phong"));
                 return s;
             }

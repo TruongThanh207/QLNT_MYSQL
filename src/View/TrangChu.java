@@ -376,7 +376,7 @@ public class TrangChu extends javax.swing.JFrame {
         // TODO add your handling code here:
         jPanel2.removeAll();
         jPanel2.setLayout(new BorderLayout());
-        jPanel2.add(new BillPanel());
+        jPanel2.add(new BillPanel(isuser));
         jPanel2.validate();
         jPanel2.repaint();
         JHoadon.setForeground(new Color(255, 102, 102));

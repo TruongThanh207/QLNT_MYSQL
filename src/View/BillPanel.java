@@ -8,33 +8,47 @@ package View;
 import Controller.BillDAL;
 import Controller.GuestDAL;
 import Controller.RoomsDAL;
+import Controller.UserDAL;
+import Model.Bill;
 import Model.Guest;
 import Model.Room;
-import java.text.DateFormat;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 
 /**
  *
  * @author NT_Thanh
  */
-public class BillPanel extends javax.swing.JPanel {
+public class BillPanel extends javax.swing.JPanel{
     private Guest guest;
     private Room room;
+    private Bill bill;
     private float money;
+    private BillDAL us;
+    private RoomsDAL rs;
+    private UserDAL ur;
+    private int index, id_user;
+    private Date t, date,dt_af,dt_dk;
+    private String date_begin, date_af, iuser;
+    
     private ArrayList<Room> listRoom;
     /**
      * Creates new form BillPanel
      */
-    public BillPanel() {
+    public BillPanel(String username) {
         initComponents();
         jdcDate_end.setDate(new Date());
         SetCombobox();
+        iuser = username;
+   
     }
     public void SetCombobox()
     {
@@ -79,13 +93,13 @@ public class BillPanel extends javax.swing.JPanel {
         txtphuchi = new javax.swing.JTextField();
         btnthanhtoan = new javax.swing.JButton();
         jLabel12 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
+        btnxuathoadon = new javax.swing.JButton();
         txttongtien = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         validation_csd = new javax.swing.JLabel();
         validation_csn = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btntraphong = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
@@ -106,6 +120,7 @@ public class BillPanel extends javax.swing.JPanel {
 
         txtngdaidien.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtngdaidien.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtngdaidien.setEnabled(false);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setText("Phòng");
@@ -181,11 +196,16 @@ public class BillPanel extends javax.swing.JPanel {
         jLabel12.setForeground(new java.awt.Color(255, 0, 0));
         jLabel12.setText("Tiền Trọ");
 
-        jButton2.setBackground(new java.awt.Color(102, 0, 102));
-        jButton2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("Xuất Hóa Đơn");
-        jButton2.setEnabled(false);
+        btnxuathoadon.setBackground(new java.awt.Color(102, 0, 102));
+        btnxuathoadon.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnxuathoadon.setForeground(new java.awt.Color(255, 255, 255));
+        btnxuathoadon.setText("Xuất Hóa Đơn");
+        btnxuathoadon.setEnabled(false);
+        btnxuathoadon.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnxuathoadonActionPerformed(evt);
+            }
+        });
 
         txttongtien.setBackground(new java.awt.Color(255, 255, 255));
         txttongtien.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -207,11 +227,11 @@ public class BillPanel extends javax.swing.JPanel {
         jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel14.setText("____________________________________________________________________________________________________");
 
-        jButton1.setBackground(new java.awt.Color(102, 0, 102));
-        jButton1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Thanh Lý ");
-        jButton1.setEnabled(false);
+        btntraphong.setBackground(new java.awt.Color(102, 0, 102));
+        btntraphong.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btntraphong.setForeground(new java.awt.Color(255, 255, 255));
+        btntraphong.setText("Thanh Lý ");
+        btntraphong.setEnabled(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -274,9 +294,9 @@ public class BillPanel extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnthanhtoan, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(109, 109, 109)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btntraphong, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(104, 104, 104)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnxuathoadon, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 719, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(44, 44, 44))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -348,8 +368,8 @@ public class BillPanel extends javax.swing.JPanel {
                 .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnthanhtoan, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btntraphong, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnxuathoadon, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -357,27 +377,62 @@ public class BillPanel extends javax.swing.JPanel {
     private void cbPhongActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbPhongActionPerformed
         // TODO add your handling code here:
         String item = cbPhong.getSelectedItem().toString();
-        int index = Integer.parseInt(item);
+        index = Integer.parseInt(item);
+        
+        ur = new UserDAL();
+        id_user = ur.FindUser(iuser);
+        
         //get guest
         GuestDAL gs = new GuestDAL();
         guest = gs.GetByIDPhong(index);
+        SimpleDateFormat sdf= new SimpleDateFormat("yyyy-MM-dd");
+        
+        
+        
+        String date_dk = guest.getNgaydk();
+        try {
+            dt_dk = sdf.parse(date_dk);
+        } catch (ParseException ex) {
+            ex.printStackTrace();
+        }
+        
         //get room
-        RoomsDAL rs = new RoomsDAL();
+        rs = new RoomsDAL();
         room = rs.GetRoomByID(index);
         //get bill
-        BillDAL us = new BillDAL();
+        us = new BillDAL();
+        bill = us.GetDateEndLast(room.getTen());
+        if(us.FindBillExsistFirst(room.getTen())!=0)
+        {
+           date_af = bill.getDate_end();
+                try {
+                    dt_af = sdf.parse(date_af);
+                } catch (ParseException ex) {
+                    Logger.getLogger(BillPanel.class.getName()).log(Level.SEVERE, null, ex);
+                }
+        }
+        else
+        {
+            
+        }
+        
+        
+        
         if(guest!=null)
         {
             
-            if(us.FindBillExsistFirst(room.getTen())==0||guest.getNgaydk().getTime()>=us.GetDateEndLast(room.getTen()).getTime())
+            if(us.FindBillExsistFirst(room.getTen())==0||dt_dk.getTime()>=dt_af.getTime())
             {
-                txtdate_begin.setText(guest.getNgaydk().toString());
+                String date = sdf.format(dt_dk);
+                txtdate_begin.setText(date);
                 txtngdaidien.setText(guest.getName()); 
             }
             else
             {
-                txtdate_begin.setText("");
-                txtngdaidien.setText("");
+                
+                //String date = sdf.format(date_af);
+                txtdate_begin.setText(date_af);
+                txtngdaidien.setText(guest.getName());
             }
             txtCSDO.setText(String.valueOf(room.getChisodien_old()));
             txtCSNO.setText(String.valueOf(room.getChisonuoc_old()));
@@ -387,62 +442,92 @@ public class BillPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_cbPhongActionPerformed
 
     private void btnthanhtoanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnthanhtoanActionPerformed
+        // TODO add your handling code here:
         if(txtCSDN.getText().equals(""))
-        {
-            validation_csd.setText("*");
-        }
-        if(txtCSNN.getText().equals("")){
-            validation_csn.setText("*");
-        }
-        if(!txtCSDN.getText().equals(""))
-        {
-            validation_csd.setText("");
-        }
-        if(!txtCSNN.getText().equals("")){
-            validation_csn.setText("");
-        }
-        if(!(txtCSDN.getText().equals("")||txtCSNN.getText().equals("")))
-        {
-            money=0;
-            SimpleDateFormat sdf= new SimpleDateFormat("yyyy-dd-MM");
-            validation_csd.setText("");
-            validation_csn.setText("");
-            Date date = jdcDate_end.getDate();
-            Date t= new Date();
-            String date_begin = txtdate_begin.getText();
-            try {
-                t = sdf.parse(date_begin);
-            } catch (ParseException ex) {
-                Logger.getLogger(BillPanel.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            String date_end=sdf.format(date); 
-            
-            //get days
-            int diffInDays = (int)( (date.getTime()-t.getTime()) / (1000 * 60 * 60 * 24));
-            
-            //Begin cal money
-            if(diffInDays<30)
             {
-                money += diffInDays*50000;
+                validation_csd.setText("*");
             }
-            int moneycsd = Integer.parseInt(txtCSDN.getText())- Integer.parseInt(txtCSDO.getText());
-            int moneycsn = Integer.parseInt(txtCSNN.getText())- Integer.parseInt(txtCSNO.getText());
-            
-            money += moneycsd*3000+moneycsn*7000;
-            int phuchi = Integer.parseInt(txtphuchi.getText())!=0 ? Integer.parseInt(txtphuchi.getText()): 0;
-            money += phuchi;
-            //End cal money
-            
-            txttongtien.setText(String.valueOf(money));
-        }
+            if(txtCSNN.getText().equals("")){
+                validation_csn.setText("*");
+            }
+            if(!txtCSDN.getText().equals(""))
+            {
+                validation_csd.setText("");
+            }
+            if(!txtCSNN.getText().equals("")){
+                validation_csn.setText("");
+            }
+            if(!(txtCSDN.getText().equals("")||txtCSNN.getText().equals("")))
+            {
+                money=0;
+                validation_csd.setText("");
+                validation_csn.setText("");
+                btntraphong.setEnabled(true);
+                btnxuathoadon.setEnabled(true); 
+                SimpleDateFormat sdf= new SimpleDateFormat("yyyy-MM-dd");
+                
+                date = jdcDate_end.getDate();
+                date_begin = txtdate_begin.getText();
+                try {
+                    t = sdf.parse(date_begin);
+                } catch (ParseException ex) {
+                    Logger.getLogger(BillPanel.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                //get days
+                int diffInDays = (int)( (date.getTime()-t.getTime()) / (1000 * 60 * 60 * 24));
+
+                //Begin cal money
+                if(diffInDays<30)
+                {
+                    money += diffInDays*50000;
+                }
+                int moneycsd = Integer.parseInt(txtCSDN.getText())- Integer.parseInt(txtCSDO.getText());
+                int moneycsn = Integer.parseInt(txtCSNN.getText())- Integer.parseInt(txtCSNO.getText());
+
+                money += moneycsd*3000+moneycsn*7000;
+                int phuchi = Integer.parseInt(txtphuchi.getText())!=0 ? Integer.parseInt(txtphuchi.getText()): 0;
+                money += phuchi;
+                //End cal money
+
+                txttongtien.setText(String.valueOf(money));
+            }
     }//GEN-LAST:event_btnthanhtoanActionPerformed
+
+    private void btnxuathoadonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnxuathoadonActionPerformed
+        // TODO add your handling code here:
+        if(txtCSDN.getText().equals("")|| txtCSNN.getText().equals(""))          
+           {
+               JOptionPane.showMessageDialog(this, "Please into infor!");
+               btntraphong.setEnabled(false);
+               btnxuathoadon.setEnabled(false); 
+           }
+           else
+           {
+               SimpleDateFormat f= new SimpleDateFormat("yyyy-MM-dd");
+               int id = index;
+               String tenphong = room.getTen();
+               String nguoidaidien = txtngdaidien.getText();
+               String date_1 = txtdate_begin.getText();
+               Date dt_end = jdcDate_end.getDate();
+               String date_2 = f.format(dt_end);
+               int total_CSD = Integer.parseInt(txtCSDN.getText())-Integer.parseInt(txtCSDO.getText());
+               int total_CSN = Integer.parseInt(txtCSNN.getText())-Integer.parseInt(txtCSNO.getText());
+               int getmonth = month.getMonth();
+               int getyear = year.getYear();
+               if(us.AddBill(id, tenphong, nguoidaidien, date_1, date_2, getmonth, getyear, total_CSD, total_CSN, money, iuser))
+               {
+                   JOptionPane.showMessageDialog(this, "a");
+               }
+               us.ReportBill(us.GetIDEndLast());
+           }
+    }//GEN-LAST:event_btnxuathoadonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnthanhtoan;
+    private javax.swing.JButton btntraphong;
+    private javax.swing.JButton btnxuathoadon;
     private javax.swing.JComboBox<String> cbPhong;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -471,4 +556,6 @@ public class BillPanel extends javax.swing.JPanel {
     private javax.swing.JLabel validation_csn;
     private com.toedter.calendar.JYearChooser year;
     // End of variables declaration//GEN-END:variables
+
+    
 }

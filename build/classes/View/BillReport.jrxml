@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="0fa675b2-3ceb-47c0-bde3-938e5a2c2d8d">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="ID_BILL" class="java.lang.String">
+		<defaultValueExpression><![CDATA[30]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     bills.`PHONG` AS bills_PHONG,
+     bills.`NGUOIDAIDIEN` AS bills_NGUOIDAIDIEN,
+     bills.`DATE_BEGIN` AS bills_DATE_BEGIN,
+     bills.`DATE_END` AS bills_DATE_END,
+     bills.`MONTH` AS bills_MONTH,
+     bills.`TOTAL_CSD` AS bills_TOTAL_CSD,
+     bills.`TOTAL_CSN` AS bills_TOTAL_CSN,
+     bills.`MONEY` AS bills_MONEY,
+     users.`fullname` AS users_fullname
+FROM
+     `users` users INNER JOIN `bills` bills ON users.`id` = bills.`ID_USER`
+WHERE
+     ID_BILL = $P{ID_BILL}]]>
+	</queryString>
+	<field name="bills_PHONG" class="java.lang.String"/>
+	<field name="bills_NGUOIDAIDIEN" class="java.lang.String"/>
+	<field name="bills_DATE_BEGIN" class="java.lang.String"/>
+	<field name="bills_DATE_END" class="java.lang.String"/>
+	<field name="bills_MONTH" class="java.lang.Integer"/>
+	<field name="bills_TOTAL_CSD" class="java.lang.Integer"/>
+	<field name="bills_TOTAL_CSN" class="java.lang.Integer"/>
+	<field name="bills_MONEY" class="java.lang.Float"/>
+	<field name="users_fullname" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="107" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="16" width="555" height="38" uuid="93475a2d-2795-4a5a-bffe-92e08d4b693d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Monospaced" size="24"/>
+				</textElement>
+				<text><![CDATA[HÓA ĐƠN TIỀN PHÒNG THÁNG]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="470" y="16" width="99" height="38" uuid="5224738f-1024-4e5b-aa85-609619eadb26"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Monospaced" size="24"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{bills_MONTH}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="164" y="54" width="83" height="20" uuid="86526a8d-5422-4c8b-a916-77d02737a0d9"/>
+				<textElement>
+					<font fontName="Monospaced" size="12"/>
+				</textElement>
+				<text><![CDATA[Nhân Viên:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="247" y="54" width="144" height="20" uuid="1de24587-4b0e-4399-8a4b-3b954335d0ee"/>
+				<textElement>
+					<font fontName="Monospaced" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{users_fullname}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="164" y="78" width="190" height="20" uuid="bfbebb6e-9b97-4a0f-879c-80ea305bcbd2"/>
+				<textElement>
+					<font fontName="Monospaced" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<detail>
+		<band height="344" splitType="Stretch">
+			<staticText>
+				<reportElement x="126" y="34" width="121" height="20" uuid="f9d0a607-4a35-4f98-ac56-0fde2018ca6d"/>
+				<textElement>
+					<font fontName="Monospaced" size="12"/>
+				</textElement>
+				<text><![CDATA[Tên phòng]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="354" y="34" width="100" height="20" uuid="defaa83b-451c-412b-93e7-4bed2723d98d"/>
+				<textElement>
+					<font fontName="Monospaced" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{bills_PHONG}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="126" y="73" width="121" height="20" uuid="4669a21c-7dc1-40aa-babe-7d8b57ea2ebe"/>
+				<textElement>
+					<font fontName="Monospaced" size="12"/>
+				</textElement>
+				<text><![CDATA[Người đại diện]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="354" y="73" width="142" height="20" uuid="d8688788-2d9c-471a-b391-4ae6504247aa"/>
+				<textElement>
+					<font fontName="Monospaced" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{bills_NGUOIDAIDIEN}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="354" y="113" width="100" height="20" uuid="0c35a102-8f77-4007-bcd4-ef8bed2979d1"/>
+				<textElement>
+					<font fontName="Monospaced" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{bills_DATE_BEGIN}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="126" y="113" width="121" height="20" uuid="4cfecfd8-7fb8-4332-8314-06894c5b6c7b"/>
+				<textElement>
+					<font fontName="Monospaced" size="12"/>
+				</textElement>
+				<text><![CDATA[Ngày đầu thu]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="126" y="152" width="121" height="20" uuid="fb7fcb91-ea94-4a78-ab02-a51b1a3f1c82"/>
+				<textElement>
+					<font fontName="Monospaced" size="12"/>
+				</textElement>
+				<text><![CDATA[Ngày cuối thu]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="354" y="152" width="100" height="20" uuid="cf7a6356-fc86-4e92-b626-0e5cb7f6c5c0"/>
+				<textElement>
+					<font fontName="Monospaced" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{bills_DATE_END}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="126" y="193" width="121" height="20" uuid="b565cdf1-01c3-4be8-aee2-9ef24c8007f8"/>
+				<textElement>
+					<font fontName="Monospaced" size="12"/>
+				</textElement>
+				<text><![CDATA[Tổng chỉ số điện]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="354" y="193" width="100" height="20" uuid="2a5afa6b-1bf0-4d23-bc7f-421cac9082a3"/>
+				<textElement>
+					<font fontName="Monospaced" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{bills_TOTAL_CSD}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="126" y="232" width="121" height="20" uuid="463be8a8-7119-4a29-ab80-1d4a114ed5f7"/>
+				<textElement>
+					<font fontName="Monospaced" size="12"/>
+				</textElement>
+				<text><![CDATA[Tổng chỉ số nước]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="354" y="232" width="100" height="20" uuid="8911a748-9b2c-4b7e-a906-159751d7aa97"/>
+				<textElement>
+					<font fontName="Monospaced" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{bills_TOTAL_CSN}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="375" y="294" width="121" height="20" uuid="80e1aa31-39d1-420d-a576-f317af19c5b2"/>
+				<textElement>
+					<font fontName="Monospaced" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{bills_MONEY}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="234" y="294" width="141" height="20" uuid="61d2d267-168f-478b-a88e-328bdcfbb667"/>
+				<textElement>
+					<font fontName="Monospaced" size="14"/>
+				</textElement>
+				<text><![CDATA[Tổng thanh toán:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="126" y="273" width="293" height="1" uuid="a650bfb5-194a-4168-aaa5-6997e695a957"/>
+			</line>
+			<line>
+				<reportElement x="223" y="164" width="131" height="1" uuid="ee866669-e6c0-4622-885f-60e850b674cf"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="194" y="46" width="160" height="1" uuid="fe8ff1c5-88b4-4684-86c0-4fd2a54dfecd"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="229" y="85" width="125" height="1" uuid="e6c3bb3f-3df1-4a70-8b7d-d3a00cbdfcb8"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="213" y="125" width="141" height="1" uuid="ecc8a940-8f08-4cd4-9ffd-c69588d4cbdd"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="240" y="204" width="114" height="1" uuid="dc825341-98fe-4003-949f-271b58bc4213"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="239" y="244" width="115" height="1" uuid="c70fa032-7c32-4c48-a276-f830ebfc7968"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+		</band>
+	</detail>
+</jasperReport>

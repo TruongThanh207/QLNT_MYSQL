@@ -39,6 +39,7 @@ public class AddNhanVien extends javax.swing.JFrame {
         btnaddemployee.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                
                 UserDAL us = new UserDAL();
                 int permiss = -1;
                 if(txtusername.getText().equals("")||txtpassword.getText().equals("")||txtname.getText().equals(""))

@@ -17,10 +17,10 @@ public class Guest {
     private String sdt;
     private int sex;
     private String cmnd;
-    private Date ngaydk;
+    private String ngaydk;
     private int id_phong;
 
-    public Guest(int id, String name, String sdt, int sex, String cmnd, Date ngaydk, int id_phong) {
+    public Guest(int id, String name, String sdt, int sex, String cmnd, String ngaydk, int id_phong) {
         this.id = id;
         this.name = name;
         this.sdt = sdt;
@@ -73,11 +73,11 @@ public class Guest {
         this.cmnd = cmnd;
     }
 
-    public Date getNgaydk() {
+    public String getNgaydk() {
         return ngaydk;
     }
 
-    public void setNgaydk(Date ngaydk) {
+    public void setNgaydk(String ngaydk) {
         this.ngaydk = ngaydk;
     }
 
