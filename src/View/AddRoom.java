@@ -74,7 +74,7 @@ public class AddRoom extends javax.swing.JFrame {
         };
             tbRooms.setModel(model);
              model.setColumnIdentifiers(new Object[]{
-                "MÃ PHÒNG", "TÊN PHÒNG", "SỐ_NGƯỜI_HIỆN_CÓ", "GIÁ PHÒNG", "E1", "W1", 
+                "MÃ PHÒNG", "TÊN PHÒNG", "GIÁ PHÒNG", "E1", "W1", 
             });
              //set background table
             JTableHeader tableHeader = tbRooms.getTableHeader();
@@ -85,7 +85,7 @@ public class AddRoom extends javax.swing.JFrame {
             TableColumnModel columnModel = tbRooms.getColumnModel();
                //set align center data table
             for(Room s : list){
-                model.addRow(new Object[]{s.getId(), s.getTen(), s.getSonguoi(), 
+                model.addRow(new Object[]{s.getId(), s.getTen(),
                                           s.getPrice(), s.getChisodien_old(), 
                                           s.getChisonuoc_old()}
                 );
@@ -94,10 +94,8 @@ public class AddRoom extends javax.swing.JFrame {
                 columnModel.getColumn(0).setCellRenderer(renderer);
                 columnModel.getColumn(1).setCellRenderer(renderer);
                 columnModel.getColumn(2).setCellRenderer(renderer);
-                columnModel.getColumn(2).setPreferredWidth(120);
                 columnModel.getColumn(3).setCellRenderer(renderer);
                 columnModel.getColumn(4).setCellRenderer(renderer);
-                columnModel.getColumn(5).setCellRenderer(renderer);
             }    
                
             
@@ -133,7 +131,7 @@ public class AddRoom extends javax.swing.JFrame {
         jLabel2.setText("Giá Phòng");
 
         btnsave.setBackground(new java.awt.Color(102, 0, 102));
-        btnsave.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnsave.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnsave.setForeground(new java.awt.Color(255, 255, 255));
         btnsave.setText("Save");
 
@@ -144,7 +142,7 @@ public class AddRoom extends javax.swing.JFrame {
         txtPhong.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
         btnclose.setBackground(new java.awt.Color(255, 0, 0));
-        btnclose.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnclose.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnclose.setForeground(new java.awt.Color(255, 255, 255));
         btnclose.setText("Close");
         btnclose.addActionListener(new java.awt.event.ActionListener() {
@@ -173,7 +171,7 @@ public class AddRoom extends javax.swing.JFrame {
                         .addComponent(btnsave)
                         .addGap(54, 54, 54)
                         .addComponent(btnclose)))
-                .addContainerGap(100, Short.MAX_VALUE))
+                .addContainerGap(94, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

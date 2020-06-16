@@ -16,8 +16,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -39,10 +43,11 @@ public class BillPanel extends javax.swing.JPanel{
     private Date t, date,dt_af,dt_dk;
     private String date_begin, date_af, iuser;
     
-    private ArrayList<Room> listRoom;
+    private ArrayList<Integer> listRoom;
     /**
      * Creates new form BillPanel
      */
+    // set param for bill panel
     public BillPanel(String username) {
         initComponents();
         jdcDate_end.setDate(new Date());
@@ -54,8 +59,8 @@ public class BillPanel extends javax.swing.JPanel{
     {
         RoomsDAL us = new RoomsDAL();
         listRoom = us.GetRoomAllNotEmpty();
-        for(Room s : listRoom){   
-            cbPhong.addItem(String.valueOf(s.getId()));
+        for(int s : listRoom){   
+            cbPhong.addItem(String.valueOf(s));
         }
        
     }
@@ -100,6 +105,10 @@ public class BillPanel extends javax.swing.JPanel{
         validation_csn = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         btntraphong = new javax.swing.JButton();
+        lbdien = new javax.swing.JLabel();
+        lbnuoc = new javax.swing.JLabel();
+        txtprice = new javax.swing.JTextField();
+        jLabel15 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
@@ -183,7 +192,7 @@ public class BillPanel extends javax.swing.JPanel{
         txtphuchi.setText("0");
 
         btnthanhtoan.setBackground(new java.awt.Color(102, 0, 102));
-        btnthanhtoan.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnthanhtoan.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnthanhtoan.setForeground(new java.awt.Color(255, 255, 255));
         btnthanhtoan.setText("Thanh Toán");
         btnthanhtoan.addActionListener(new java.awt.event.ActionListener() {
@@ -197,7 +206,7 @@ public class BillPanel extends javax.swing.JPanel{
         jLabel12.setText("Tiền Trọ");
 
         btnxuathoadon.setBackground(new java.awt.Color(102, 0, 102));
-        btnxuathoadon.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnxuathoadon.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnxuathoadon.setForeground(new java.awt.Color(255, 255, 255));
         btnxuathoadon.setText("Xuất Hóa Đơn");
         btnxuathoadon.setEnabled(false);
@@ -228,10 +237,25 @@ public class BillPanel extends javax.swing.JPanel{
         jLabel14.setText("____________________________________________________________________________________________________");
 
         btntraphong.setBackground(new java.awt.Color(102, 0, 102));
-        btntraphong.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btntraphong.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btntraphong.setForeground(new java.awt.Color(255, 255, 255));
         btntraphong.setText("Thanh Lý ");
         btntraphong.setEnabled(false);
+        btntraphong.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btntraphongActionPerformed(evt);
+            }
+        });
+
+        lbdien.setForeground(new java.awt.Color(255, 204, 153));
+
+        lbnuoc.setForeground(new java.awt.Color(255, 204, 153));
+
+        txtprice.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
+        jLabel15.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel15.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel15.setText("Giá Phòng");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -255,33 +279,41 @@ public class BillPanel extends javax.swing.JPanel{
                         .addComponent(cbPhong, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(year, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(month, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel7)
-                        .addGap(40, 40, 40)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtCSNO, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(txtCSDN, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(validation_csd, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(txtCSNO, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(txtCSDN, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(validation_csd, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jLabel8)
-                                .addGap(45, 45, 45))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel11)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(jLabel10)
-                                        .addComponent(jLabel9)))
-                                .addGap(42, 42, 42)))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(txtCSNN)
-                            .addComponent(txtCSDO, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtphuchi, javax.swing.GroupLayout.DEFAULT_SIZE, 106, Short.MAX_VALUE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(3, 3, 3)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(jLabel9)
+                                            .addComponent(lbnuoc))))
+                                .addGap(40, 40, 40))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(lbdien)
+                                    .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel7)
+                                    .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING))
+                                .addGap(43, 43, 43))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(3, 3, 3)
+                                .addComponent(jLabel10)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtprice)
+                            .addComponent(txtCSDO)
+                            .addComponent(txtphuchi, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txtCSNN, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(validation_csn, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(55, 55, 55))
@@ -313,39 +345,47 @@ public class BillPanel extends javax.swing.JPanel{
                 .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(cbPhong, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(27, 27, 27)
+                    .addComponent(cbPhong, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtprice)
+                    .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtngdaidien, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(26, 26, 26)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtngdaidien, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+                                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(26, 26, 26))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(lbdien)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtdate_begin, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtCSDN, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtCSDO, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(33, 33, 33)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtCSDO, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(35, 35, 35)
                         .addComponent(validation_csd, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(31, 31, 31)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jdcDate_end, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txtCSNO, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(txtCSNO, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, 0)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(45, 45, 45)
                         .addComponent(validation_csn, javax.swing.GroupLayout.PREFERRED_SIZE, 11, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(30, 30, 30)
+                        .addComponent(lbnuoc)
+                        .addGap(26, 26, 26)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(year, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -378,9 +418,10 @@ public class BillPanel extends javax.swing.JPanel{
         // TODO add your handling code here:
         String item = cbPhong.getSelectedItem().toString();
         index = Integer.parseInt(item);
-        
+        //get index combobox
         ur = new UserDAL();
         id_user = ur.FindUser(iuser);
+        //get id users
         
         //get guest
         GuestDAL gs = new GuestDAL();
@@ -399,6 +440,7 @@ public class BillPanel extends javax.swing.JPanel{
         //get room
         rs = new RoomsDAL();
         room = rs.GetRoomByID(index);
+        txtprice.setText(String.valueOf(room.getPrice()));
         //get bill
         us = new BillDAL();
         bill = us.GetDateEndLast(room.getTen());
@@ -415,8 +457,6 @@ public class BillPanel extends javax.swing.JPanel{
         {
             
         }
-        
-        
         
         if(guest!=null)
         {
@@ -460,11 +500,63 @@ public class BillPanel extends javax.swing.JPanel{
             if(!(txtCSDN.getText().equals("")||txtCSNN.getText().equals("")))
             {
                 money=0;
+                SimpleDateFormat sdf= new SimpleDateFormat("yyyy-MM-dd");
+                
+                //ngay dau thang hien tai
+                LocalDate currentdate = LocalDate.now();
+                int currentYear = currentdate.getYear();
+                Date ll = new Date();
+                int currentMonth = ll.getMonth()+1;
+                String date_chotstr=null;
+                if(currentMonth<10)
+                {
+                    date_chotstr = currentYear+"-"+"0"+currentMonth+"-01";
+                } 
+                else
+                {
+                    date_chotstr = currentYear+"-"+currentMonth+"-01";
+                }
+                //yyyy-dd-mm
+                Date date_chot=null;
+                try {
+                    date_chot = sdf.parse(date_chotstr);
+                } catch (ParseException ex) {
+                    Logger.getLogger(BillPanel.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                //ngay dau thang hien tai
+                
+                //ngay hien tai
+                int currentDay = currentdate.getDayOfMonth();
+                String date_nowstr=null;
+                if(currentMonth<10)
+                {
+                    date_nowstr = currentYear+"-"+"0"+currentMonth+"-"+currentDay;
+                }
+                if(currentDay<10)
+                {
+                    date_nowstr = currentYear+"-"+currentMonth+"-"+"0"+currentDay;
+                }
+                if(currentMonth<10&&currentDay<10)
+                {
+                    date_nowstr = currentYear+"-"+"0"+currentMonth+"-"+"0"+currentDay;
+                }
+                Date date_now_chot=null;
+                try {
+                    date_now_chot = sdf.parse(date_nowstr);
+                } catch (ParseException ex) {
+                    Logger.getLogger(BillPanel.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                //ngay hien tai
+                
+                
+                
+                
+                
                 validation_csd.setText("");
                 validation_csn.setText("");
                 btntraphong.setEnabled(true);
                 btnxuathoadon.setEnabled(true); 
-                SimpleDateFormat sdf= new SimpleDateFormat("yyyy-MM-dd");
+                
                 
                 date = jdcDate_end.getDate();
                 date_begin = txtdate_begin.getText();
@@ -473,18 +565,37 @@ public class BillPanel extends javax.swing.JPanel{
                 } catch (ParseException ex) {
                     Logger.getLogger(BillPanel.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                //get days
-                int diffInDays = (int)( (date.getTime()-t.getTime()) / (1000 * 60 * 60 * 24));
+                //get days with monthnow =month+1
+                
+                LocalDate date_1 = LocalDate.parse(date_begin);
+                LocalDate date_chot_dauthang = LocalDate.parse(date_chotstr);
+                LocalDate date_now = LocalDate.parse(date_nowstr);
+                
+             
 
+                //neu monthnow> monthdk 1
+                int diffInDays;
+                JOptionPane.showMessageDialog(this, date_nowstr);
                 //Begin cal money
-                if(diffInDays<30)
+                if(date_1.getDayOfMonth()!=1&&date_chot_dauthang.getMonthValue()-date_1.getMonthValue()==1)
                 {
-                    money += diffInDays*50000;
+                    diffInDays = (int)( (date_chot.getTime()-t.getTime()) / (1000 * 60 * 60 * 24));
+                    money += Float.parseFloat(txtprice.getText().toString())*diffInDays/30;
+                }
+                else if(date_1.getDayOfMonth()==1&&date_chot_dauthang.getMonthValue()-date_1.getMonthValue()==1)
+                {
+                         money+=Float.parseFloat(txtprice.getText().toString());
+                   
+                }
+                else if(date_1.getDayOfMonth()==1&&date_now.getMonthValue()==date_1.getMonthValue())
+                {
+                    diffInDays = (int)( (date_now_chot.getTime()-t.getTime()) / (1000 * 60 * 60 * 24));
+                    money += Float.parseFloat(txtprice.getText().toString())*diffInDays/30;
                 }
                 int moneycsd = Integer.parseInt(txtCSDN.getText())- Integer.parseInt(txtCSDO.getText());
                 int moneycsn = Integer.parseInt(txtCSNN.getText())- Integer.parseInt(txtCSNO.getText());
 
-                money += moneycsd*3000+moneycsn*7000;
+                money += moneycsd*3000+moneycsn*11000;
                 int phuchi = Integer.parseInt(txtphuchi.getText())!=0 ? Integer.parseInt(txtphuchi.getText()): 0;
                 money += phuchi;
                 //End cal money
@@ -514,13 +625,47 @@ public class BillPanel extends javax.swing.JPanel{
                int total_CSN = Integer.parseInt(txtCSNN.getText())-Integer.parseInt(txtCSNO.getText());
                int getmonth = month.getMonth();
                int getyear = year.getYear();
-               if(us.AddBill(id, tenphong, nguoidaidien, date_1, date_2, getmonth, getyear, total_CSD, total_CSN, money, iuser))
+               
+               //Insert bill
+               if(us.AddBill(id, tenphong, nguoidaidien, date_1, date_2, getmonth+1, getyear, total_CSD, total_CSN, money, iuser))
                {
-                   JOptionPane.showMessageDialog(this, "a");
+                   JOptionPane.showMessageDialog(this, "Xuất hóa đơn thành công!");
                }
+               
+               // Create report
                us.ReportBill(us.GetIDEndLast());
+               
+               //update csd, csn for room
+               rs.UpdateRoomByID(index, txtCSDN.getText(), txtCSNN.getText());
            }
     }//GEN-LAST:event_btnxuathoadonActionPerformed
+
+    private void btntraphongActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btntraphongActionPerformed
+        if (JOptionPane.showConfirmDialog(this,
+            "Bạn có chắc muốn thanh lý?", "Thông Báo", 
+            JOptionPane.YES_NO_OPTION,
+            JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION){
+            
+                GuestDAL us = new GuestDAL();
+                int x = Integer.parseInt(cbPhong.getSelectedItem().toString());
+                if(us.RemoveRoom(x))
+                {
+                    JOptionPane.showMessageDialog(this, "Trả phòng thành công!");
+                }
+                else
+                {
+                    JOptionPane.showMessageDialog(this, "Phòng chưa tồn tại!");
+                }
+
+        }else
+        {
+            
+        }
+       
+       
+        
+        
+    }//GEN-LAST:event_btntraphongActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -534,6 +679,7 @@ public class BillPanel extends javax.swing.JPanel{
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -543,6 +689,8 @@ public class BillPanel extends javax.swing.JPanel{
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private com.toedter.calendar.JDateChooser jdcDate_end;
+    private javax.swing.JLabel lbdien;
+    private javax.swing.JLabel lbnuoc;
     private com.toedter.calendar.JMonthChooser month;
     private javax.swing.JTextField txtCSDN;
     private javax.swing.JTextField txtCSDO;
@@ -551,6 +699,7 @@ public class BillPanel extends javax.swing.JPanel{
     private javax.swing.JTextField txtdate_begin;
     private javax.swing.JTextField txtngdaidien;
     private javax.swing.JTextField txtphuchi;
+    private javax.swing.JTextField txtprice;
     private javax.swing.JLabel txttongtien;
     private javax.swing.JLabel validation_csd;
     private javax.swing.JLabel validation_csn;

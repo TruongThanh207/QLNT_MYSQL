@@ -56,7 +56,7 @@ public class RoomPanel extends javax.swing.JPanel {
         };
         tbRooms.setModel(model);
          model.setColumnIdentifiers(new Object[]{
-            "MÃ PHÒNG", "TÊN PHÒNG", "SỐ_NGƯỜI_HIỆN_CÓ", "GIÁ PHÒNG", "E1", "W1", 
+            "MÃ PHÒNG", "TÊN PHÒNG", "GIÁ PHÒNG", "E1", "W1", 
         });
          //set background table
         JTableHeader tableHeader = tbRooms.getTableHeader();
@@ -67,7 +67,7 @@ public class RoomPanel extends javax.swing.JPanel {
         TableColumnModel columnModel = tbRooms.getColumnModel();
            //set align center data table
         for(Room s : list){
-            model.addRow(new Object[]{s.getId(), s.getTen(), s.getSonguoi(), 
+            model.addRow(new Object[]{s.getId(), s.getTen(), 
                                       s.getPrice(), s.getChisodien_old(), 
                                       s.getChisonuoc_old()}
             );
@@ -76,10 +76,9 @@ public class RoomPanel extends javax.swing.JPanel {
             columnModel.getColumn(0).setCellRenderer(renderer);
             columnModel.getColumn(1).setCellRenderer(renderer);
             columnModel.getColumn(2).setCellRenderer(renderer);
-            columnModel.getColumn(2).setPreferredWidth(120);
             columnModel.getColumn(3).setCellRenderer(renderer);
             columnModel.getColumn(4).setCellRenderer(renderer);
-            columnModel.getColumn(5).setCellRenderer(renderer);
+           
         }
     }
 
@@ -128,14 +127,19 @@ public class RoomPanel extends javax.swing.JPanel {
         jScrollPane1.setViewportView(tbRooms);
 
         btnsave.setBackground(new java.awt.Color(102, 0, 102));
-        btnsave.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        btnsave.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnsave.setForeground(new java.awt.Color(255, 255, 255));
         btnsave.setText("Lưu");
         btnsave.setEnabled(false);
         btnsave.setPreferredSize(new java.awt.Dimension(53, 35));
+        btnsave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnsaveActionPerformed(evt);
+            }
+        });
 
         btnXoa.setBackground(new java.awt.Color(102, 0, 102));
-        btnXoa.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        btnXoa.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnXoa.setForeground(new java.awt.Color(255, 255, 255));
         btnXoa.setText("Xóa");
         btnXoa.setEnabled(false);
@@ -158,9 +162,10 @@ public class RoomPanel extends javax.swing.JPanel {
         txtngdaidien.setEnabled(false);
 
         btnedit.setBackground(new java.awt.Color(102, 0, 102));
-        btnedit.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        btnedit.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnedit.setForeground(new java.awt.Color(255, 255, 255));
         btnedit.setText("Sửa");
+        btnedit.setEnabled(false);
         btnedit.setPreferredSize(new java.awt.Dimension(53, 235));
         btnedit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -169,7 +174,7 @@ public class RoomPanel extends javax.swing.JPanel {
         });
 
         btnadd.setBackground(new java.awt.Color(102, 0, 102));
-        btnadd.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        btnadd.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnadd.setForeground(new java.awt.Color(255, 255, 255));
         btnadd.setText("Thêm");
         btnadd.setPreferredSize(new java.awt.Dimension(65, 35));
@@ -232,7 +237,7 @@ public class RoomPanel extends javax.swing.JPanel {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(txtpriceroom, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtngdaidien, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(197, 197, 197))))
+                        .addGap(194, 194, 194))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -251,7 +256,7 @@ public class RoomPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtngdaidien, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnedit, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -267,7 +272,7 @@ public class RoomPanel extends javax.swing.JPanel {
 
     private void tbRoomsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbRoomsMouseClicked
         // TODO add your handling code here:
-       
+        btnedit.setEnabled(true);
         btnXoa.setEnabled(true);
         int click = tbRooms.getSelectedRow();
         TableModel model=tbRooms.getModel();
@@ -287,22 +292,20 @@ public class RoomPanel extends javax.swing.JPanel {
         }
         
         txtnameroom.setText(model.getValueAt(click, 1).toString());
-        txtpriceroom.setText(model.getValueAt(click, 3).toString());
+        txtpriceroom.setText(model.getValueAt(click, 2).toString());
         
     }//GEN-LAST:event_tbRoomsMouseClicked
 
     private void btneditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btneditActionPerformed
         // TODO add your handling code here:
         if(btnedit.getText().equals("Hủy"))
-        {
-             txtnameroom.setEnabled(false);
+        {  
              txtpriceroom.setEnabled(false);
-             btnedit.setText("Edit");
+             btnedit.setText("Sửa");
              btnsave.setEnabled(false);
         }
         else
         {
-            txtnameroom.setEnabled(true);
             txtpriceroom.setEnabled(true);
             btnedit.setText("Hủy");
             btnsave.setEnabled(true);
@@ -316,6 +319,7 @@ public class RoomPanel extends javax.swing.JPanel {
     private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
         // TODO add your handling code here:
         RoomsDAL us = new RoomsDAL();
+        
         int click = tbRooms.getSelectedRow();
         int id = Integer.parseInt(tbRooms.getValueAt(click, 0).toString());
         if(us.RemoveRoomByID(id))
@@ -324,6 +328,26 @@ public class RoomPanel extends javax.swing.JPanel {
             LoadData();
         }
     }//GEN-LAST:event_btnXoaActionPerformed
+
+    private void btnsaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsaveActionPerformed
+                RoomsDAL us = new RoomsDAL();
+                if(txtnameroom.getText().equals("")||txtpriceroom.getText().equals(""))
+                {
+                    JOptionPane.showMessageDialog(this, "Please enter infor!");
+                }
+                else
+                {
+                    if(us.UpdateRoom(txtnameroom.getText(), Integer.parseInt(txtpriceroom.getText())))
+                    {
+                        JOptionPane.showMessageDialog(this, "Update Success!");
+                        LoadData();
+                    }
+                    else
+                    {
+                        JOptionPane.showMessageDialog(this, "Exsist Room!");
+                    }
+                }
+    }//GEN-LAST:event_btnsaveActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

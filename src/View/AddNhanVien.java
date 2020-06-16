@@ -152,7 +152,7 @@ public class AddNhanVien extends javax.swing.JFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Add Employee", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14))); // NOI18N
 
         btnClose.setBackground(new java.awt.Color(204, 0, 0));
-        btnClose.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnClose.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnClose.setForeground(new java.awt.Color(255, 255, 255));
         btnClose.setText("Close");
         btnClose.setPreferredSize(new java.awt.Dimension(65, 30));
@@ -163,7 +163,7 @@ public class AddNhanVien extends javax.swing.JFrame {
         });
 
         btnaddemployee.setBackground(new java.awt.Color(102, 0, 102));
-        btnaddemployee.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnaddemployee.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnaddemployee.setForeground(new java.awt.Color(255, 255, 255));
         btnaddemployee.setText("Save");
         btnaddemployee.setPreferredSize(new java.awt.Dimension(63, 30));

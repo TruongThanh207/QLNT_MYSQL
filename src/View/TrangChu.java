@@ -79,6 +79,7 @@ public class TrangChu extends javax.swing.JFrame {
                     jGuest.setForeground(Color.WHITE);
                     jRoom.setForeground(Color.WHITE);
                     JHoadon.setForeground(Color.WHITE);
+                    jthongke.setForeground(Color.WHITE);
                 }
 
                 @Override
@@ -125,6 +126,7 @@ public class TrangChu extends javax.swing.JFrame {
         jGuest = new javax.swing.JLabel();
         JHoadon = new javax.swing.JLabel();
         jUser = new javax.swing.JLabel();
+        jthongke = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -210,7 +212,7 @@ public class TrangChu extends javax.swing.JFrame {
         jGuest.setForeground(new java.awt.Color(255, 255, 255));
         jGuest.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jGuest.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/baseline_done_all_white_18dp.png"))); // NOI18N
-        jGuest.setText("Quản Lí Khách Hàng");
+        jGuest.setText("Quản Lí Khách Thuê");
         jGuest.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jGuest.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -238,6 +240,19 @@ public class TrangChu extends javax.swing.JFrame {
         jUser.setText("Quản Lý Nhân Viên");
         jUser.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
 
+        jthongke.setBackground(new java.awt.Color(255, 255, 255));
+        jthongke.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jthongke.setForeground(new java.awt.Color(255, 255, 255));
+        jthongke.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jthongke.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/baseline_done_all_white_18dp.png"))); // NOI18N
+        jthongke.setText("Thống Kê Hóa Đơn");
+        jthongke.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jthongke.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jthongkeMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -250,23 +265,26 @@ public class TrangChu extends javax.swing.JFrame {
                     .addComponent(jRoom, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jGuest, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(JHoadon, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jthongke, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jhome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jInfor, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jInfor, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jRoom, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jRoom, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jGuest, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jGuest, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(JHoadon, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(JHoadon, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jUser, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addComponent(jthongke, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jUser, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(47, Short.MAX_VALUE))
         );
 
         jInfor.getAccessibleContext().setAccessibleDescription("");
@@ -327,6 +345,7 @@ public class TrangChu extends javax.swing.JFrame {
         jGuest.setForeground(Color.WHITE);
         jRoom.setForeground(Color.WHITE);
          JHoadon.setForeground(Color.WHITE);
+         jthongke.setForeground(Color.WHITE);
         
     }//GEN-LAST:event_jhomeMouseClicked
 
@@ -343,6 +362,7 @@ public class TrangChu extends javax.swing.JFrame {
         jGuest.setForeground(Color.WHITE);
         jUser.setForeground(Color.WHITE);
          JHoadon.setForeground(Color.WHITE);
+         jthongke.setForeground(Color.WHITE);
        
     }//GEN-LAST:event_jRoomMouseClicked
 
@@ -358,6 +378,7 @@ public class TrangChu extends javax.swing.JFrame {
         jUser.setForeground(Color.WHITE);
         jRoom.setForeground(Color.WHITE);
         JHoadon.setForeground(Color.WHITE);
+        jthongke.setForeground(Color.WHITE);
        
     }//GEN-LAST:event_jGuestMouseClicked
 
@@ -384,6 +405,7 @@ public class TrangChu extends javax.swing.JFrame {
         jInfor.setForeground(Color.WHITE);
         jUser.setForeground(Color.WHITE);
         jRoom.setForeground(Color.WHITE);
+        jthongke.setForeground(Color.WHITE);
         
     }//GEN-LAST:event_JHoadonMouseClicked
 
@@ -404,9 +426,24 @@ public class TrangChu extends javax.swing.JFrame {
         jGuest.setForeground(Color.WHITE);
         jRoom.setForeground(Color.WHITE);
         JHoadon.setForeground(Color.WHITE);
+        jthongke.setForeground(Color.WHITE);
         
 
     }//GEN-LAST:event_jInforMouseClicked
+
+    private void jthongkeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jthongkeMouseClicked
+         jPanel2.removeAll();
+        jPanel2.setLayout(new BorderLayout());
+        jPanel2.add(new ThongKe());
+        jPanel2.validate();
+        jPanel2.repaint();
+        jthongke.setForeground(new Color(255, 102, 102));
+        jUser.setForeground(Color.WHITE);
+        jGuest.setForeground(Color.WHITE);
+        jRoom.setForeground(Color.WHITE);
+        JHoadon.setForeground(Color.WHITE);
+        jInfor.setForeground(Color.WHITE);
+    }//GEN-LAST:event_jthongkeMouseClicked
 
     /**
      * @param args the command line arguments
@@ -455,6 +492,7 @@ public class TrangChu extends javax.swing.JFrame {
     private javax.swing.JLabel jRoom;
     private javax.swing.JLabel jUser;
     private javax.swing.JPanel jhome;
+    private javax.swing.JLabel jthongke;
     // End of variables declaration//GEN-END:variables
 
     

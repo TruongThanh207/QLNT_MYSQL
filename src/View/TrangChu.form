@@ -80,7 +80,7 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jhome" max="32767" attributes="0"/>
-                  <Group type="102" alignment="0" attributes="0">
+                  <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jInfor" alignment="1" max="32767" attributes="0"/>
@@ -88,6 +88,7 @@
                           <Component id="jGuest" alignment="1" max="32767" attributes="0"/>
                           <Component id="JHoadon" alignment="1" max="32767" attributes="0"/>
                           <Component id="jUser" max="32767" attributes="0"/>
+                          <Component id="jthongke" alignment="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -97,16 +98,18 @@
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="jhome" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="jInfor" min="-2" pref="75" max="-2" attributes="0"/>
+                      <Component id="jInfor" min="-2" pref="59" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="jRoom" min="-2" pref="75" max="-2" attributes="0"/>
+                      <Component id="jRoom" min="-2" pref="57" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="jGuest" min="-2" pref="75" max="-2" attributes="0"/>
+                      <Component id="jGuest" min="-2" pref="57" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="JHoadon" min="-2" pref="75" max="-2" attributes="0"/>
+                      <Component id="JHoadon" min="-2" pref="58" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="jUser" min="-2" pref="75" max="-2" attributes="0"/>
-                      <EmptySpace pref="31" max="32767" attributes="0"/>
+                      <Component id="jthongke" min="-2" pref="61" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="jUser" min="-2" pref="61" max="-2" attributes="0"/>
+                      <EmptySpace pref="47" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -238,7 +241,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/Image/baseline_done_all_white_18dp.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Qu&#x1ea3;n L&#xed; Kh&#xe1;ch H&#xe0;ng"/>
+                <Property name="text" type="java.lang.String" value="Qu&#x1ea3;n L&#xed; Kh&#xe1;ch Thu&#xea;"/>
                 <Property name="horizontalTextPosition" type="int" value="4"/>
               </Properties>
               <Events>
@@ -282,6 +285,28 @@
                 <Property name="text" type="java.lang.String" value="Qu&#x1ea3;n L&#xfd; Nh&#xe2;n Vi&#xea;n"/>
                 <Property name="horizontalTextPosition" type="int" value="4"/>
               </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="jthongke">
+              <Properties>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                </Property>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Tahoma" size="14" style="1"/>
+                </Property>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                </Property>
+                <Property name="horizontalAlignment" type="int" value="2"/>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/Image/baseline_done_all_white_18dp.png"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Th&#x1ed1;ng K&#xea; H&#xf3;a &#x110;&#x1a1;n"/>
+                <Property name="horizontalTextPosition" type="int" value="4"/>
+              </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jthongkeMouseClicked"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

@@ -127,5 +127,70 @@ public class GuestDAL {
         }
          return null;
     }
+
+
+    public boolean AddGuest(String text, String text0, String text1, int gender, int tem, String datedk) {
+        String sql="INSERT INTO `guests`(`ID`, `NAME`, `SDT`, `SEX`, `CMND`, `NGAY_DK`, `ID_PHONG`) VALUES "
+                + "(null,'"+text+"','"+text1+"','"+gender+"','"+text0+"','"+datedk+"','"+tem+"')";
+         try
+        {
+            Statement st = da.getConn().createStatement();
+            st.executeUpdate(sql);
+            return true;
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();  
+        }
+        return false;
+    }
+
+    public boolean RemoveRoom(int x) {
+         if(FindGuestByID(x))
+         {
+              String sql = "Delete FROM guests where ID_PHONG='"+x+"'";
+                try {
+                   Statement st = da.getConn().createStatement();
+                   st.executeUpdate(sql);
+                   return true;
+               } catch (Exception e) {
+                   e.printStackTrace();
+               }
+               return false;
+         }
+         else
+         {
+             return false;
+         }
+        
+    }
+    public boolean FindGuestByID(int x) {
+        
+        String sql = "Select * FROM guests where ID_PHONG='"+x+"'";
+        try {
+            Statement st = da.getConn().createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while(rs.next())
+            {
+                return true;
+            }
+            return false;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean RemoveGuestByName(int cmnd) {
+        String sql = "Delete FROM guests where CMND='"+cmnd+"'";
+                try {
+                   Statement st = da.getConn().createStatement();
+                   st.executeUpdate(sql);
+                   return true;
+               } catch (Exception e) {
+                   e.printStackTrace();
+               }
+               return false;
+    }
    
 }

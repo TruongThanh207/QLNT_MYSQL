@@ -11,6 +11,7 @@ import static com.sun.org.apache.xalan.internal.lib.ExsltDynamic.map;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Hashtable;
@@ -137,5 +138,32 @@ public class BillDAL {
         }
         return false;
     }
-    
+
+    public ArrayList<Bill> GetBillByMonth(int month) {
+         ArrayList<Bill> list = new ArrayList<>();
+       String sql ="Select * from Bills where MONTH ='"+month+"'";
+        try
+        {
+            Statement st = da.getConn().createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            
+            while(rs.next())
+            {
+                Bill a = new Bill();
+                a.setPhong(rs.getString(2));
+                a.setNguoidaidien(rs.getString(3));
+                a.setTotal_csd(rs.getInt(8));
+                a.setTotal_csn(rs.getInt(9));
+                a.setDate_end(rs.getString(5));
+                a.setMoney(rs.getFloat(10));
+                list.add(a);
+            } 
+            return list;
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();  
+        }
+        return null;
+    }
 }
