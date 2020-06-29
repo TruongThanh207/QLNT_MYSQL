@@ -41,7 +41,7 @@ public class BillPanel extends javax.swing.JPanel{
     private UserDAL ur;
     private int index, id_user;
     private Date t, date,dt_af,dt_dk;
-    private String date_begin, date_af, iuser;
+    private String date_begin, date_af, iuser,date_chotstr;
     
     private ArrayList<Integer> listRoom;
     /**
@@ -507,7 +507,7 @@ public class BillPanel extends javax.swing.JPanel{
                 int currentYear = currentdate.getYear();
                 Date ll = new Date();
                 int currentMonth = ll.getMonth()+1;
-                String date_chotstr=null;
+              
                 if(currentMonth<10)
                 {
                     date_chotstr = currentYear+"-"+"0"+currentMonth+"-01";
@@ -621,16 +621,31 @@ public class BillPanel extends javax.swing.JPanel{
                String date_1 = txtdate_begin.getText();
                Date dt_end = jdcDate_end.getDate();
                String date_2 = f.format(dt_end);
+               LocalDate date_dt2 = LocalDate.parse(date_2);
+               LocalDate date_dt = LocalDate.parse(date_1);
                int total_CSD = Integer.parseInt(txtCSDN.getText())-Integer.parseInt(txtCSDO.getText());
                int total_CSN = Integer.parseInt(txtCSNN.getText())-Integer.parseInt(txtCSNO.getText());
                int getmonth = month.getMonth();
                int getyear = year.getYear();
-               
-               //Insert bill
-               if(us.AddBill(id, tenphong, nguoidaidien, date_1, date_2, getmonth+1, getyear, total_CSD, total_CSN, money, iuser))
+               int b = date_dt2.getMonthValue() - date_dt.getMonthValue();
+               JOptionPane.showMessageDialog(this, date_dt.getDayOfMonth());
+               if(date_dt.getDayOfMonth()!=1 && b==1 || date_dt.getDayOfMonth()==1 && date_dt2.getMonthValue() - date_dt.getMonthValue()==1 )
                {
-                   JOptionPane.showMessageDialog(this, "Xuất hóa đơn thành công!");
+                    if(us.AddBill(id, tenphong, nguoidaidien, date_1, date_chotstr, getmonth+1, getyear, total_CSD, total_CSN, money, iuser))
+                    {
+                        JOptionPane.showMessageDialog(this, "Xuất hóa đơn thành công!");
+                    }
                }
+               else
+               {
+                     //Insert bill
+                    if(us.AddBill(id, tenphong, nguoidaidien, date_1, date_2, getmonth+1, getyear, total_CSD, total_CSN, money, iuser))
+                    {
+                        JOptionPane.showMessageDialog(this, "Xuất hóa đơn thành công!");
+                    }
+               }
+               
+             
                
                // Create report
                us.ReportBill(us.GetIDEndLast());
