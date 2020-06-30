@@ -4,11 +4,14 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/D:/KIVI/Java/New%20folder/QLNT-master/src/Controller/GuestDAL.java</file>
+            <file>file:/D:/KIVI/Java/New%20folder/QLNT-master/src/View/AddRoom.java</file>
             <file>file:/D:/KIVI/Java/New%20folder/QLNT-master/src/View/RoomPanel.java</file>
             <file>file:/D:/KIVI/Java/New%20folder/QLNT-master/src/View/InforPanel.java</file>
+            <file>file:/D:/KIVI/Java/New%20folder/QLNT-master/src/View/TrangChu.java</file>
             <file>file:/D:/KIVI/Java/New%20folder/QLNT-master/src/View/QLNhanVien.java</file>
             <file>file:/D:/KIVI/Java/New%20folder/QLNT-master/src/Controller/BillDAL.java</file>
-            <file>file:/D:/KIVI/Java/New%20folder/QLNT-master/src/View/BillPanel.java</file>
+            <file>file:/D:/KIVI/Java/New%20folder/QLNT-master/src/Controller/DataAccess.java</file>
+            <file>file:/D:/KIVI/Java/New%20folder/QLNT-master/src/View/ThongKe.java</file>
             <file>file:/D:/KIVI/Java/New%20folder/QLNT-master/src/View/Login.java</file>
             <file>file:/D:/KIVI/Java/New%20folder/QLNT-master/src/View/GuestPanel.java</file>
         </group>

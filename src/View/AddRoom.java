@@ -42,23 +42,35 @@ public class AddRoom extends javax.swing.JFrame {
         btnsave.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                int flag=0;
                 RoomsDAL us = new RoomsDAL();
-                if(txtPhong.getText().equals("")||txtGiaPhong.getText().equals(""))
+                try {
+                    int giaphong = Integer.parseInt(txtGiaPhong.getText()); 
+                 } catch(Exception ex) {
+                  JOptionPane.showMessageDialog(rootPane,"Không đúng định dạng!","Error",JOptionPane.ERROR_MESSAGE);//dua ra hop thoai thong bao
+                   flag=1;
+                 }
+                if(flag==0)
                 {
-                    JOptionPane.showMessageDialog(AddRoom.this, "Please enter infor!");
-                }
-                else
-                {
-                    if(us.AddRoom(txtPhong.getText(), Integer.parseInt(txtGiaPhong.getText())))
+                    if(txtPhong.getText().equals("")||txtGiaPhong.getText().equals(""))
                     {
-                        JOptionPane.showMessageDialog(AddRoom.this, "Add Success!");
-                        LoadData(tbRooms);
+                        JOptionPane.showMessageDialog(AddRoom.this, "Please enter infor!");
                     }
                     else
                     {
-                        JOptionPane.showMessageDialog(AddRoom.this, "Exsist Room!");
+                        if(us.AddRoom(txtPhong.getText(), Integer.parseInt(txtGiaPhong.getText())))
+                        {
+                            JOptionPane.showMessageDialog(AddRoom.this, "Add Success!");
+                            LoadData(tbRooms);
+                        }
+                        else
+                        {
+                            JOptionPane.showMessageDialog(AddRoom.this, "Exsist Room!");
+                        }
                     }
                 }
+                flag=0;
+                
             }  
         });
     }

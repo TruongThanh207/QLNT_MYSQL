@@ -312,33 +312,50 @@ public class GuestPanel extends javax.swing.JPanel {
                 SimpleDateFormat f= new SimpleDateFormat("yyyy-MM-dd");
                 Date dt_end = jdcNgayDk.getDate();
                 String datedk = f.format(dt_end);
-                if(txtname.getText().equals("")||txtcmnd.getText().equals("")||txtsdt.getText().equals(""))
+                int flag =0;
+                try {
+                        int cmnd = Integer.parseInt(txtsdt.getText());
+                        int sdt = Integer.parseInt(txtcmnd.getText());
+                      } catch(Exception e) {
+                       JOptionPane.showMessageDialog(this,"Không đúng định dạng!","Error",JOptionPane.ERROR_MESSAGE);//dua ra hop thoai thong bao
+                         txtsdt.setText("");
+                         txtcmnd.setText("");
+                         flag=1;
+                     }
+                if(flag==0)
                 {
-                    JOptionPane.showMessageDialog(this, "Please enter infor!");
-                }
-                else
-                {
-                     if(jrnam.isSelected()||jrnu.isSelected())
+                    if(txtname.getText().equals("")||txtcmnd.getText().equals("")||txtsdt.getText().equals(""))
                     {
-                        if(jrnam.isSelected())
-                        {
-                            gender =1;
-                        }
-                        if(jrnu.isSelected())
-                        {
-                            gender =0;
-                        }
 
-                        if(us.AddGuest(txtname.getText(), txtcmnd.getText(), txtsdt.getText(), gender , tem, datedk))
-                        {
-                            JOptionPane.showMessageDialog(this, "Add Success!");
-                            LoadData();
-                        }   
+                        JOptionPane.showMessageDialog(this, "Please enter infor!");
                     }
-                    else{
-                        JOptionPane.showMessageDialog(this, "Please check radio!");
+                    else
+                    {
+
+                         if(jrnam.isSelected()||jrnu.isSelected())
+                        {
+                            if(jrnam.isSelected())
+                            {
+                                gender =1;
+                            }
+                            if(jrnu.isSelected())
+                            {
+                                gender =0;
+                            }
+
+                            if(us.AddGuest(txtname.getText(), txtcmnd.getText(), txtsdt.getText(), gender , tem, datedk))
+                            {
+                                JOptionPane.showMessageDialog(this, "Add Success!");
+                                LoadData();
+                            }   
+                        }
+                        else{
+                            JOptionPane.showMessageDialog(this, "Please check radio!");
+                        }
                     }
                 }
+                
+                flag=0;
     }//GEN-LAST:event_btnaddActionPerformed
 
     private void jrnamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrnamActionPerformed
@@ -363,7 +380,7 @@ public class GuestPanel extends javax.swing.JPanel {
         }
         else
         {
-            int cmnd = Integer.parseInt(tbGuest.getValueAt(click, 3).toString());
+            String cmnd = tbGuest.getValueAt(click, 3).toString();
             GuestDAL us = new GuestDAL();
        
             if(us.RemoveGuestByName(cmnd))

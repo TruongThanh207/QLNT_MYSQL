@@ -181,7 +181,7 @@ public class GuestDAL {
         return false;
     }
 
-    public boolean RemoveGuestByName(int cmnd) {
+    public boolean RemoveGuestByName(String cmnd) {
         String sql = "Delete FROM guests where CMND='"+cmnd+"'";
                 try {
                    Statement st = da.getConn().createStatement();

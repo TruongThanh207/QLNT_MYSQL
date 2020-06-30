@@ -575,7 +575,7 @@ public class BillPanel extends javax.swing.JPanel{
 
                 //neu monthnow> monthdk 1
                 int diffInDays;
-                JOptionPane.showMessageDialog(this, date_nowstr);
+
                 //Begin cal money
                 if(date_1.getDayOfMonth()!=1&&date_chot_dauthang.getMonthValue()-date_1.getMonthValue()==1)
                 {
@@ -592,8 +592,23 @@ public class BillPanel extends javax.swing.JPanel{
                     diffInDays = (int)( (date_now_chot.getTime()-t.getTime()) / (1000 * 60 * 60 * 24));
                     money += Float.parseFloat(txtprice.getText().toString())*diffInDays/30;
                 }
-                int moneycsd = Integer.parseInt(txtCSDN.getText())- Integer.parseInt(txtCSDO.getText());
-                int moneycsn = Integer.parseInt(txtCSNN.getText())- Integer.parseInt(txtCSNO.getText());
+        
+                int moneycsd = 0;
+                int moneycsn = 0;
+                try {
+                    moneycsd = Integer.parseInt(txtCSDN.getText())- Integer.parseInt(txtCSDO.getText());
+                    moneycsn = Integer.parseInt(txtCSNN.getText())- Integer.parseInt(txtCSNO.getText());
+                 } catch(Exception e) {
+                  JOptionPane.showMessageDialog(this,"Không đúng định dạng!","Error",JOptionPane.ERROR_MESSAGE);//dua ra hop thoai thong bao
+                    txtCSDN.setText("");
+                    txtCSNN.setText("");
+                }
+                if(moneycsd<0 ||moneycsn<0)
+                {
+                    JOptionPane.showMessageDialog(this,"Chỉ số mới nhỏ hơn chỉ số cũ!","Error",JOptionPane.ERROR_MESSAGE);
+                     txtCSDN.setText("");
+                    txtCSNN.setText("");
+                }
 
                 money += moneycsd*3000+moneycsn*11000;
                 int phuchi = Integer.parseInt(txtphuchi.getText())!=0 ? Integer.parseInt(txtphuchi.getText()): 0;
@@ -628,7 +643,6 @@ public class BillPanel extends javax.swing.JPanel{
                int getmonth = month.getMonth();
                int getyear = year.getYear();
                int b = date_dt2.getMonthValue() - date_dt.getMonthValue();
-               JOptionPane.showMessageDialog(this, date_dt.getDayOfMonth());
                if(date_dt.getDayOfMonth()!=1 && b==1 || date_dt.getDayOfMonth()==1 && date_dt2.getMonthValue() - date_dt.getMonthValue()==1 )
                {
                     if(us.AddBill(id, tenphong, nguoidaidien, date_1, date_chotstr, getmonth+1, getyear, total_CSD, total_CSN, money, iuser))
